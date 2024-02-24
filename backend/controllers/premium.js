@@ -3,8 +3,6 @@ const Razorpay = require('razorpay');
 
 exports.purchasePremium = async (req, res) => {
 
-
-    //
     try {
         var rzp = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
@@ -13,13 +11,15 @@ exports.purchasePremium = async (req, res) => {
 
         const amount = 2500;
 
-        rzp.orders.create({ amount, currency: "INR" }, async (err, order) => {
+        rzp.orders.create({ amount, currency: "INR" }, (err, order) => {
             if (err)
                 throw new Error(JSON.stringify(err));
 
-            await req.user.createOrder({ orderid: order.id, status: "PENDING" });
-            return res.status(201).json({ order, key_id: rzp.key_id });
-            
+            req.user.createOrder({ orderid: order.id, status: "PENDING" }).then(() => {
+                return res.status(201).json({ order, key_id: rzp.key_id });
+            }).catch(err => {
+                throw new Error(err)
+            })
         })
     } catch (err) {
         console.log(err);
@@ -37,15 +37,22 @@ exports.updatePrmium = async (req, res) => {
 
         if (check) {
 
-            await order.update({ paymentid: payment_id, status: 'SUCCESSFUL' });
-            await req.user.update({ isPremium: true });
+            const promise1 = order.update({ paymentid: payment_id, status: 'SUCCESSFUL' });
+            const promise2 = req.user.update({ isPremium: true });
 
-            return res.status(202).json({ success: true, message: 'Transaction Successful' });
-            
+            Promise.all([promise1, promise2]).then(() => {
+                return res.status(202).json({ success: true, message: 'Transaction Successful' });
+            })
+                .catch((err) => {
+                    throw new Error(err);
+                });
         }
         else {
-            await order.update({ paymentid: payment_id, status: 'FAILED' });
-            return res.status(202).json({ success: false, message: 'Transaction Failed' });
+            order.update({ paymentid: payment_id, status: 'FAILED' }).then(() => {
+                return res.status(202).json({ success: false, message: 'Transaction Failed' });
+            }).catch((err) => {
+                throw new Error(err);
+            })
         }
     } catch (err) {
         throw new Error(err);

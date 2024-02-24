@@ -150,7 +150,6 @@ h2 {
 .nav_li:hover:not(#active){
     background-color: #4caf50;
 }
-
 .logOut{
     background-color: #4caf50;
     cursor: pointer;
@@ -163,35 +162,31 @@ h2 {
     cursor: pointer;
     float: right
 }
-
 .logOut:hover {
     background-color: #45a049;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+#active {
+    background-color: #4caf50;
+}
+
+.listExpenses{
+    list-style-type: none;
+    text-align: left;
+    color: #4f4f4f;
+}  
+
+
+#deleteBtn{
+    background-color: #e11212;
 
     
           
             
     
-
-          
-          Expand Down
-    
-    
   
-#active {
-    background-color: #4caf50;
-}
-#listExpenses{
-    list-style-type: none;
-}  
-.liExpenses{
-    text-align: left;
-    color: #4f4f4f;
-}
-#deleteBtn{
-    background-color: #e11212;
     width: max-content;
+    margin-top: -5px;
     color: white;
     padding: 7px;
     border: none;
