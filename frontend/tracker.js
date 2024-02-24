@@ -220,7 +220,7 @@ function loadLeaderboard() {
 function showLeaderboardElement(obj) {
 
     var name = obj.name;
-    var amt = obj.total_cost;
+    var amt = obj.total_amount;
 
     if(amt === null)
         amt = 0;
