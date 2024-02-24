@@ -5,18 +5,24 @@ var leaderBoardStatus = false;
 function addExpense(e) {
 
     e.preventDefault();
+
     var amount = document.getElementById('amt_inp').value;
     var des = document.getElementById('des').value;
     var cat = document.getElementById('cat-val').value;
+
     let obj = {
         amount,
         des,
         cat
     };
+
     let token = localStorage.getItem('token');
+
     axios.post(`${url}/expense/addExpense`, obj, { headers: { "Authorization": token } })
         .then(respond => {
             document.getElementById('myForm').reset();
+            history.replaceState(null, null, document.URL);
+            window.location.replace("./dashboard.html");
         })
         .catch(err => console.log(err));
 
@@ -61,12 +67,14 @@ function logOut() {
 function deleteItem(e) {
     if (confirm('Are You Sure?')) {
         var li = e.target.parentElement;
-        var liContent = li.innerText;
+        var liContent = li.textContent;
         const str = liContent.split("-");
-        var key = document.getElementById('invTxt').textContent;
-        key = key.replace("-", "");
-        key = key.trim();
+
+        var key = str[3].trim();
+
         let token = localStorage.getItem('token');
+
+
         axios.post(`${url}/expense/deleteExpense/${key}`, {}, { headers: { "Authorization": token } })
             .then((response) => {
                 var list = document.getElementById('listExpenses');
@@ -75,12 +83,16 @@ function deleteItem(e) {
             .catch(errorMessage => {
                 console.log(errorMessage);
             });
+
     }
 }
+
 function premium(e) {
     let token = localStorage.getItem('token');
+
     axios.get(`${url}/purchase/premiumMembership`, { headers: { "Authorization": token } })
         .then(respond => {
+
             var options = {
                 "key": respond.data.key_id,
                 "order_id": respond.data.order.id,
@@ -101,12 +113,15 @@ function premium(e) {
             const rzp1 = new Razorpay(options);
             rzp1.open();
             e.preventDefault();
+
             rzp1.on('payment.failed', async function (respond) {
+
                 await axios.post(`${url}/purchase/updateTransactionStatus`, {
                     order_id: respond.error.metadata.order_id,
                     payment_id: respond.error.metadata.payment_id,
                     check: false
                 }, { headers: { "Authorization": token } });
+
                 alert('Transaction Failed');
             })
         })
@@ -210,13 +225,23 @@ function showLeaderboardElement(obj) {
     if(amt === null)
         amt = 0;
 
-    var val = `Name : ${name}  \u2003 \u2003 Total Expense : ₹${amt}`;
+    var val1 = `Name : ${name}`;
+    var val2 =`Total Expense : ₹${amt}`; 
 
     var list = document.getElementById('listLeaderboard');
 
     var li = document.createElement('li');
-    li.appendChild(document.createTextNode(val));
 
+    var div1 = document.createElement('div');
+    div1.style.float = 'left';
+    div1.appendChild(document.createTextNode(val1));
+    li.appendChild(div1);
+    
+    var div2 = document.createElement('div');
+    div2.style.float = 'right';
+    div2.appendChild(document.createTextNode(val2));
+    li.appendChild(div2);
+    
     li.style.padding = '3px';
     list.appendChild(li);
 
