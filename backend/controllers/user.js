@@ -1,9 +1,7 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 exports.addUser = async (req, res, next) => {
-
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
@@ -26,18 +24,28 @@ exports.loginUser = async (req, res, next) => {
         }else{
 
             if(await bcrypt.compare(password, user.password)){
-                res.status(200).json({message : "User Login Successfully !", token: generateToken(user.id)});
+
+                res.status(200).json({message : "User Login Successfully !", token: generateToken(user.id), premium: user.isPremium});
             }
             else{
                 res.status(401).json({message: "User not authorized", display : "Incorrect email or password"});
+
+    
+          
+            
+    
+
+          
+          Expand Down
+    
+    
+  
             }
         }
     }catch(err){
         console.log(err);
     }
-
 }
-
 function generateToken(id){
     return jwt.sign({userId: id},  process.env.TOKEN_SECRET);
 }
