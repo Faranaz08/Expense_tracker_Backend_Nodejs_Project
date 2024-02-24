@@ -11,10 +11,4 @@ router.get('/getExpenses', auth.authenticate , expenseController.getExpenses);
 
 router.post('/deleteExpense/:id', auth.authenticate , expenseController.deleteExpense);
 
-router.get('/download', auth.authenticate, expenseController.downloadExpenses);
-
-router.post('/saveURL', auth.authenticate, expenseController.saveURL);
-
-router.get('/showHistory', auth.authenticate, expenseController.getHistory);
-
 module.exports = router;
