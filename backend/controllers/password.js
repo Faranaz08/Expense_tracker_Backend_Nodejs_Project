@@ -29,7 +29,7 @@ exports.resetPassword = async (req, res) => {
         const tranEmailApi = new Sib.TransactionalEmailsApi();
 
         const sender = {
-            email: 'shashwatv18@gmail.com',
+            email: 'farnazannigeri3142@gmail.com',
             name: 'Expense Tracker'
         }
 
@@ -43,6 +43,7 @@ exports.resetPassword = async (req, res) => {
             sender,
             to: receivers,
             subject: 'Reset Password',
+
             htmlContent: `
             <p>Hi ${name}, </p>
             <p>A password reset for your account was requested. </p>
