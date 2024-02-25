@@ -6,10 +6,9 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 var userPassId;
-
+//password
 exports.resetPassword = async (req, res) => {
 
-    
     const email = req.body.email;
 
     const user = await User.findOne({ where: { email: email } });
