@@ -52,26 +52,25 @@ window.addEventListener("DOMContentLoaded", () => {
 function getExpenses(page){
     let token = localStorage.getItem('token');
 
-    axios.get(`${url}/expense/getExpenses?page=${page}`, { headers: { "Authorization": token } })
-        .then((respond) => {
+    axios.get(`${url}/expense/getExpenses?page=${page}&perPage=${limit}`, { headers: { "Authorization": token } })
+    .then((respond) => {
 
-            if (respond.data.expenses.length === 0) {
-                document.getElementById('dashMsg').innerHTML = 'No data found !';
-            } else {
-
-                document.getElementById('listExpenses').innerHTML='';
-
-                document.getElementById('dashMsg').innerHTML = '';
-                for (var i = 0; i < respond.data.expenses.length; i++) {
-                    showExpense(respond.data.expenses[i]);
-                }
-
-                showPagination(respond.data);
-
-            }
-        })
-        .catch(err => console.log(err));
+        if (respond.data.expenses.length === 0) {
+ function showPagination({currentPage,
+        btn3.addEventListener('click', () => getExpenses (nextPage));
+        pagination.appendChild(btn3);
+    };
 }
+
+var perPage = document.getElementById('perPage');
+
+perPage.addEventListener("click", function() {
+
+var val = document.getElementById('perPage').value;
+localStorage.setItem('perPage', val);
+getExpenses(1);
+
+});
 
 
 function logOut() {
@@ -81,17 +80,7 @@ function logOut() {
           
             
     
-
-          
-          Expand Down
-          
-            
-    
-
-          
-          Expand Up
-    
-    @@ -227,8 +243,6 @@ function loadLeaderboard() {
+function loadLeaderboard() {
   
     history.replaceState(null, null, document.URL);
     window.location.replace("./login.html");
@@ -226,17 +215,7 @@ function showLeaderboardElement(obj) {
           
             
     
-
-          
-          Expand Down
-          
-            
-    
-
-          
-          Expand Up
-    
-    @@ -260,3 +274,111 @@ function showLeaderboardElement(obj) {
+function showLeaderboardElement(obj) {
   
     if(amt === null)
         amt = 0;

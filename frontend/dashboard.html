@@ -46,29 +46,33 @@
 
             <p id='dashMsg' class="error-message"></p>
             <ul id="listExpenses" class="listExpenses">
-
             </ul>
 
-        </section>
-
-        <section class="leaderBoards">
-            <h3 id='leaderTitle' style="display: none;">Leaderboard</h3>
-            <ul id="listLeaderboard" class="listExpenses" style="display: none;">
-
-            </ul>
-
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
-        </section>
+            <div class="container">
+        
+                <div style="font-size: 13px; display: flex; float: right; height: min-content;">
+                    <label style="margin-top:7px; margin-right: 7px; float: right;">Records per Page :</label>
+                    <select id="perPage" style="width: max-content; height: max-content; margin: 0px;">
+                        <option id="10" value="10">10</option>
+                        <option id="25" value="25">25</option>
+                        <option id="50" value="50">50</option>
+                    </select>
+                </div>
+        
+        
+                <section class="expenses">
+                    <h3 style="margin-top: 40px;">Expenses</h3>
+        
+                    <p id='dashMsg' class="error-message"></p>
+        
+        
+                    <div>
+                    <ul id="listExpenses" class="listExpenses">
+        
+                    </ul>
+                    </div>
+        
+                </section>
     </div>
     
 </body>
