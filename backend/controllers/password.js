@@ -6,8 +6,9 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 var userPassId;
-//password
+
 exports.resetPassword = async (req, res) => {
+
 
     const email = req.body.email;
 
@@ -17,33 +18,36 @@ exports.resetPassword = async (req, res) => {
 
         const id = uuid.v4();
         const forgotPasswordCreated = await ForgotPassword.create({id, userId: user.id, isActive: true})
-        
+
         const email = user.email;
         const name = user.name;
 
         const client = Sib.ApiClient.instance;
 
+
+    
+          
+            
+    
+
+   exports.resetPassword = async (req, res) => {
+  
         const apiKey = client.authentications['api-key'];
         apiKey.apiKey = process.env.BREVO_API_KEY;
-
         const tranEmailApi = new Sib.TransactionalEmailsApi();
-
         const sender = {
-            email: 'farnazannigeri3142@gmail.com',
+            email: 'shashwatv18@gmail.com',
             name: 'Expense Tracker'
         }
-
         const receivers = [
             {
                 email: `${email}`
             },
         ]
-
         const response = await tranEmailApi.sendTransacEmail({
             sender,
             to: receivers,
             subject: 'Reset Password',
-
             htmlContent: `
             <p>Hi ${name}, </p>
             <p>A password reset for your account was requested. </p>
@@ -71,7 +75,7 @@ exports.viewPage = async (req, res) => {
         userPassId = active.userId;
 
         if(active.isActive){
-            
+
             await active.update({isActive : false});
 
             res.sendFile(path.join(__dirname,`..`,`..`,`frontend`,`updatePassword.html`));

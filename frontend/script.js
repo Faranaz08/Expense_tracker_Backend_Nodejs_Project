@@ -113,8 +113,9 @@ async function forgotPassword(e) {
     let obj = {
         email
     }
-    const user  = await axios.post(`${url}/users/password/getUser`, obj);
+    const forgotEmail  = await axios.post(`${url}/users/password/forgotPassword`, obj);
 
+    if(forgotEmail.data.status){
     if(user){
         const respond = await axios.post(`${url}/users/password/resetPassword`, user.data.user);
         alert(`Reset Link sent successfully`);
